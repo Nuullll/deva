@@ -8,8 +8,8 @@ QT_USE_NAMESPACE
 SocketServer::SocketServer(quint16 port, QObject *parent) :
 	QObject(parent),
 	webSocketServer(Q_NULLPTR),
-	clients()
-{
+	clients() {
+
 	webSocketServer = new QWebSocketServer(QStringLiteral("Chat Server"),
 		QWebSocketServer::NonSecureMode,
 		this);
@@ -21,36 +21,51 @@ SocketServer::SocketServer(quint16 port, QObject *parent) :
 	}
 }
 
-SocketServer::~SocketServer()
-{
+SocketServer::~SocketServer() {
+
 	webSocketServer->close();
 	qDeleteAll(clients.begin(), clients.end());
 }
 
-void SocketServer::onNewConnection()
-{
+void SocketServer::onNewConnection() {
+
 	QWebSocket *pSocket = webSocketServer->nextPendingConnection();
 
+	connect(pSocket, &QWebSocket::binaryMessageReceived, this, &SocketServer::processMessage);
 	connect(pSocket, &QWebSocket::textMessageReceived, this, &SocketServer::processMessage);
 	connect(pSocket, &QWebSocket::disconnected, this, &SocketServer::socketDisconnected);
 
 	clients << pSocket;
 }
 
-void SocketServer::processMessage(QString message)
-{
+void SocketServer::processMessage(QString message) {
+
 	QWebSocket *pSender = qobject_cast<QWebSocket *>(sender());
+
+	qDebug() << "Message received:" << message;
+
 	Q_FOREACH(QWebSocket *pClient, clients)
 	{
-		if (pClient != pSender) //don't echo message back to sender
-		{
-			pClient->sendTextMessage(message);
-		}
+		pClient->sendTextMessage(message);
+		qDebug() << "Message sent back:" << message;
 	}
 }
 
-void SocketServer::socketDisconnected()
-{
+void SocketServer::processBinaryMessage(QByteArray binaryMessage) {
+
+	QWebSocket *pSender = qobject_cast<QWebSocket *>(sender());
+
+	qDebug() << "Binary message received:" << binaryMessage.data();
+
+	Q_FOREACH(QWebSocket *pClient, clients)
+	{
+		pClient->sendBinaryMessage(binaryMessage);
+		qDebug() << "Binary message sent back:" << binaryMessage.data();
+	}
+}
+
+void SocketServer::socketDisconnected() {
+
 	QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
 	if (pClient)
 	{

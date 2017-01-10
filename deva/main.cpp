@@ -35,6 +35,7 @@ bool startAdb(QString adbPath, quint16 hostPort, quint16 devicePort) {
 	}
 
 	// execute: adb shell am broadcast -a NotifyServiceStart
+	arguments.clear();
 	arguments << "shell" << "am" << "broadcast" << "-a" << "NotifyServiceStart";
 	if (!execute(adbPath, arguments)) {
 		return false;
@@ -64,7 +65,7 @@ bool execute(QString exePath, QStringList arguments) {
 		return false;
 	}
 
-	if (process->error()) {
+	if (process->exitStatus() != QProcess::NormalExit) {
 		qDebug() << exePath << "Error occured.";
 		qDebug() << "Arguments:" << arguments;
 		qDebug() << process->readAllStandardError().data();

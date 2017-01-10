@@ -18,6 +18,7 @@ public:
 	private Q_SLOTS:
 	void onNewConnection();
 	void processMessage(QString message);
+	void processBinaryMessage(QByteArray binaryMessage);
 	void socketDisconnected();
 
 private:
