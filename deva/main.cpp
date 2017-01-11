@@ -3,6 +3,7 @@
 #include <QProcess>
 #include "socketserver.h"
 #include "main.h"
+#include "socketclient.h"
 
 int main(int argc, char *argv[]) {
 
@@ -10,8 +11,11 @@ int main(int argc, char *argv[]) {
     deva w;
     w.show();
 
-	SocketServer server(HOST_PORT);
+	//SocketServer server(HOST_PORT);
 	startAdb("C:\\adb\\adb.exe", HOST_PORT, DEVICE_PORT);
+
+	SocketClient client(QUrl(QStringLiteral("ws://127.0.0.1:12580")), true);
+	QObject::connect(&client, &SocketClient::closed, &a, &QApplication::quit);
 
     return a.exec();
 }

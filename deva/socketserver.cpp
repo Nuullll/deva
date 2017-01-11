@@ -31,6 +31,8 @@ void SocketServer::onNewConnection() {
 
 	QWebSocket *pSocket = webSocketServer->nextPendingConnection();
 
+	qDebug() << "Client connected.";
+
 	connect(pSocket, &QWebSocket::binaryMessageReceived, this, &SocketServer::processMessage);
 	connect(pSocket, &QWebSocket::textMessageReceived, this, &SocketServer::processMessage);
 	connect(pSocket, &QWebSocket::disconnected, this, &SocketServer::socketDisconnected);
