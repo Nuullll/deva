@@ -55,23 +55,23 @@
     <ClCompile Include="GeneratedFiles\qrc_deva.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_socketserver.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_socketclient.cpp">
       <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_socketserver.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="socketserver.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="socketclient.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_socketclient.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_socketclient.cpp">
       <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_commander.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_commander.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="commander.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -84,10 +84,10 @@
     <CustomBuild Include="deva.qrc">
       <Filter>Resource Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="socketserver.h">
+    <CustomBuild Include="socketclient.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="socketclient.h">
+    <CustomBuild Include="commander.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

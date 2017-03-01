@@ -1,27 +1,25 @@
 #ifndef SOCKETCLIENT_H
 #define SOCKETCLIENT_H
 
-#include <QtCore/QObject>
-#include <QtWebSockets/QWebSocket>
+#include <QTcpSocket>
+#include "commander.h"
 
 class SocketClient : public QObject
 {
 	Q_OBJECT
+
 public:
-	explicit SocketClient(const QUrl &url, bool debug = false, QObject *parent = Q_NULLPTR);
+	explicit SocketClient(QObject *parent = 0);
 
-Q_SIGNALS:
-	void closed();
+	void doConnect(QString address, quint16 port);
 
-private Q_SLOTS:
-	void onConnected();
-	void onTextMessageReceived(QString message);
+public slots:
 	void onStateChanged(QAbstractSocket::SocketState state);
+	void sendMessage(QString message);
 
 private:
-	QWebSocket m_webSocket;
-	QUrl m_url;
-	bool m_debug;
+	QTcpSocket *socket;
+	Commander *commander;
 };
 
 #endif // SOCKETCLIENT_H
